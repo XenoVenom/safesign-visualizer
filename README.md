@@ -4,7 +4,7 @@
 The Visual Security Layer for Crypto Wallets.
 Stop guessing what you're signing. See the consequences.
 
-[Link Text](#features)Features • [Link Text](#installation)Installation • [Link Text](#roadmap)Roadmap • [Link Text](#contributing)Contributing
+[Features](#features) • [Installation](#installation) • [Roadmap](#roadmap) • [Contributing](#contributing)
 
 ## 🚀 Features
 Visual Time-Travel UI: Don't read hex codes. See a visual timeline of exactly what happens if you sign (e.g., "Wallet Drained").
@@ -19,16 +19,16 @@ The Safe Verification
 ![safe](screenshots/safe.png)
 ## 📥 Installation From Source (Developers)
 1. Clone the repo:
-'git clone https://github.com/XenoVenom/safesign-visualizer.git'
+`git clone https://github.com/XenoVenom/safesign-visualizer.git`
 2. Install dependencies:
-'pnpm install'
+`pnpm install`
 3. Run the development server:
-'pnpm dev'
+`pnpm dev`
 4. Load the extension in Chrome:
--Open 'chrome://extensions'
+-Open `chrome://extensions`
 -Enable "Developer Mode"
 -Click "Load Unpacked"
--Select the 'build/chrome-mv3-dev' folder.
+-Select the `build/chrome-mv3-dev` folder.
 ## 🗓️ Roadmap
 [x] Core Interception Engine
 [x] Visual Warning UI (Time-Travel)
