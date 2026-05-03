@@ -39,3 +39,21 @@ We welcome contributions! If you have suggestions for new heuristics or UI impro
 
 ## 📄License
 MIT License
+## ⚠️Disclaimer
+SafeSign Visualizer is provided "as is" for educational and security enhancement purposes. While it aims to detect and prevent common scam patterns, it is not a guarantee of absolute security.
+
++ New scam techniques are developed daily.
++ Users should always exercise caution and verify transaction details manually.
+
+The developers assume no liability for any financial losses incurred while using this software. Use at your own risk.
+## 🔒Privacy Policy
+SafeSign respects your privacy.
+
++ **No Data Collection:** We do not collect, store, or transmit any personal data, wallet addresses, or private keys.  
++ **Local Processing:** All transaction analysis happens locally in your browser. Nothing is sent to external servers.  
++ **Permissions:** The extension requires permission to access websites solely to intercept transaction requests from your wallet. It does not read your browsing history or personal information.
+## 🛠️Built With
++ [Plasmo](https://www.plasmo.com/) - The Browser Extension Framework
++ [React](https://react.dev/) - UI Library
++ [TypeScript](https://www.typescriptlang.org/) - Language
++ Love & Security ❤️
