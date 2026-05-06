@@ -13,7 +13,9 @@ Real-Time Green Light: Get instant confirmation when a transaction is verified s
 Universal Compatibility: Works with MetaMask, Coinbase Wallet, Rabby, Brave Wallet, and any window.ethereum provider.
 ## 📸Screenshots
 **:warning:The Warning (Time-Travel UI)&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;:heavy_check_mark:The Safe Verification**                   
-<img src="screenshots/danger.png" width="500"><img src="screenshots/safe.png" width="500">  
+<img src="screenshots/danger.png" width="500"><img src="screenshots/safe.png" width="500">  **🛡️ The Dashboard**
+
+<img src="screenshots/extension_UI.png" width="500">
 
 ## 📥Installation From Source (Developers)
 1. Clone the repo:
