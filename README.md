@@ -6,16 +6,16 @@ Stop guessing what you're signing. See the consequences.
 
 [Features](#features) • [Screenshots](#screenshots) • [Installation](#installation-from-source-developers) • [Roadmap](#roadmap) • [Contributing](#contributing)
 ## 🚀Features
-Visual Time-Travel UI: Don't read hex codes. See a visual timeline of exactly what happens if you sign (e.g., "Wallet Drained").  
-Unlimited Approval Blocker: Automatically blocks transactions asking for infinite token spending permissions.  
-NFT Drain Protection: Detects and blocks setApprovalForAll scams that steal entire NFT collections.  
-Real-Time Green Light: Get instant confirmation when a transaction is verified safe.  
-Universal Compatibility: Works with MetaMask, Coinbase Wallet, Rabby, Brave Wallet, and any window.ethereum provider.
+**Visual Time-Travel UI:** Don't read hex codes. See a visual timeline of exactly what happens if you sign (e.g., "Wallet Drained").  
+**Unlimited Approval Blocker:** Automatically blocks transactions asking for infinite token spending permissions.  
+**NFT Drain Protection:** Detects and blocks setApprovalForAll scams that steal entire NFT collections.  
+**Real-Time Green Light:** Get instant confirmation when a transaction is verified safe.  
+**Universal Compatibility:** Works with MetaMask, Coinbase Wallet, Rabby, Brave Wallet, and any window.ethereum provider.
 ## 📸Screenshots
 **:warning:The Warning (Time-Travel UI)&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;:heavy_check_mark:The Safe Verification**                   
 <img src="screenshots/danger.png" width="500"><img src="screenshots/safe.png" width="500">  **🛡️ The Dashboard**
 
-<img src="screenshots/extension_UI.png" width="500">
+<img src="screenshots/extension_UI.png" width="400">
 
 ## 📥Installation From Source (Developers)
 1. Clone the repo:
