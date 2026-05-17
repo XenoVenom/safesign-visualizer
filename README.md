@@ -4,7 +4,7 @@
 The Visual Security Layer for Crypto Wallets.
 Stop guessing what you're signing. See the consequences.
 
-[Features](#features) • [Screenshots](#screenshots) • [Installation](#installation-from-source-developers) • [Roadmap](#roadmap) • [Contributing](#contributing)
+[Features](#features) • [Screenshots](#screenshots) • [Installation](#installation-from-source-developers) • [Built With](#%EF%B8%8Fbuilt-with) • [Roadmap](#roadmap) • [Contributing](#contributing) • [Privacy Policy](#privacy-policy) • [Disclaimer](#%EF%B8%8Fdisclaimer) • [License](#license)
 ## 🚀Features
 **Visual Time-Travel UI:** Don't read hex codes. See a visual timeline of exactly what happens if you sign (e.g., "Wallet Drained").  
 **Unlimited Approval Blocker:** Automatically blocks transactions asking for infinite token spending permissions.  
@@ -12,10 +12,16 @@ Stop guessing what you're signing. See the consequences.
 **Real-Time Green Light:** Get instant confirmation when a transaction is verified safe.  
 **Universal Compatibility:** Works with MetaMask, Coinbase Wallet, Rabby, Brave Wallet, and any window.ethereum provider.
 ## 📸Screenshots
-**:warning:The Warning (Time-Travel UI)&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;:heavy_check_mark:The Safe Verification**                   
-<img src="screenshots/danger.png" width="500"><img src="screenshots/safe.png" width="500">  **🛡️ The Dashboard**
 
+**<p align="center">:warning:The Warning (Time-Travel UI)&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;:heavy_check_mark:The Safe Verification</p>**
+<p align="center">
+<img src="screenshots/danger.png" width="500"><img src="screenshots/safe.png" width="500">
+</p>
+
+**<p align="center">🛡️ The Dashboard</p>**
+<p align="center">
 <img src="screenshots/extension_UI.png" width="400">
+</p>
 
 ## 📥Installation From Source (Developers)
 1. Clone the repo:
