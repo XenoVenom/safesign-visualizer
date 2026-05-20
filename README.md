@@ -12,16 +12,24 @@ Stop guessing what you're signing. See the consequences.
 **Real-Time Green Light:** Get instant confirmation when a transaction is verified safe.  
 **Universal Compatibility:** Works with MetaMask, Coinbase Wallet, Rabby, Brave Wallet, and any window.ethereum provider.
 ## 📸Screenshots
-
-**<p align="center">:warning:The Warning (Time-Travel UI)&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;:heavy_check_mark:The Safe Verification</p>**
-<p align="center">
-<img src="screenshots/danger.png" width="500"><img src="screenshots/safe.png" width="500">
-</p>
-
-**<p align="center">🛡️ The Dashboard</p>**
-<p align="center">
-<img src="screenshots/extension_UI.png" width="400">
-</p>
+<table>
+<tr>
+<td style="border: none"><b>:warning:The Warning (Time-Travel UI)</b></td>
+<td style="border: none"><b>:heavy_check_mark:The Safe Verification</b></td>
+</tr>
+<tr>
+<td style="border: none"><img src="screenshots/danger.png" width="500"></td>
+<td style="border: none"><img src="screenshots/safe.png" width="500"></td>
+</tr>
+ </table>
+ <table>
+<tr>
+<td><b>🛡️ The Dashboard</b></td>
+ </tr>
+ <tr>
+<td><img src="screenshots/extension_UI.png" width="400"></td>
+</tr>
+</table>
 
 ## 📥Installation From Source (Developers)
 1. Clone the repo:
