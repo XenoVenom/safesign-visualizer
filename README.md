@@ -60,7 +60,7 @@ We believe in the power of community to fight scammers. You can help in two ways
 **1. Code Contributions:** Submit a Pull Request with new features or heuristics.  
 **2. Scam Reporting:**  
  + Click the **"Report a Scam"** button in the extension popup.  
- + Or fill out our **Google Form**.
+ + Or fill out our [**Google Form**](https://forms.gle/2zP7nH2rmxL8RfJp6).
 
 Once a report is verified, it will be added to the SafeSign blocklist in future updates to protect all users.
 ## 🔒Privacy Policy
