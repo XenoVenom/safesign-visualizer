@@ -28,7 +28,7 @@ const WarningOverlay = () => {
   let explanation = "This transaction is unsafe."
   let node2Text = "Hidden malicious logic detected."
 
-  if (dangerType === "TOKEN_DRAIN") {
+    if (dangerType === "TOKEN_DRAIN") {
     title = "Token Drain Blocked"
     explanation = "A site is trying to get UNLIMITED access to your tokens."
     node2Text = "Site gains Unlimited Access to your tokens."
@@ -36,6 +36,10 @@ const WarningOverlay = () => {
     title = "NFT Drain Blocked"
     explanation = "A site is trying to steal your ENTIRE NFT collection."
     node2Text = "Site gains access to ALL your NFTs in this collection."
+  } else if (dangerType === "KNOWN_SCAM") {
+    title = "Known Scam Blocked"
+    explanation = "This address is a verified scammer tracked by the SafeSign community."
+    node2Text = "Funds sent to this address are lost forever."
   }
 
   return (

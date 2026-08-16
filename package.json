@@ -1,7 +1,7 @@
 {
   "name": "safesign-visualizer",
   "displayName": "SafeSign Visualizer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A visual security layer that simulates transaction outcomes and warns users of scams in plain English before they sign.",
   "author": "XenoVenom",
   "scripts": {
