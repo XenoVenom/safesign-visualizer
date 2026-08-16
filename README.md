@@ -50,12 +50,17 @@ Stop guessing what you're signing. See the consequences.
 + [TypeScript](https://www.typescriptlang.org/) - Language
 + Love & Security ❤️
 ## 📆Roadmap
-:white_check_mark: Core Interception Engine<br>
+:white_check_mark: Core Interception Engine (EIP-1193)<br>
 :white_check_mark: Visual Warning UI (Time-Travel)<br>
+:white_check_mark: Unlimited Token Approval Block (ERC-20)<br>
 :white_check_mark: Token & NFT Drain Protection<br>
 :white_check_mark: Community-Sourced Blacklist<br>
 - [ ] Permit Signature Protection (EIP-2612)<br>
-
+- [ ] Permit Signature Protection (EIP-4361)<br>
+- [ ] Transaction Simulation<br>
+- [ ] Power User Mode<br>
+- [ ] Honeypot & Rugpull Detection<br>
+- [ ] Multi-Chain Expansion<br>
 ## 🤝Contributing
 We welcome contributions! If you have suggestions for new heuristics or UI improvements, please open an issue or a pull request.  
 We believe in the power of community to fight scammers. You can help in two ways:  
