@@ -4,7 +4,7 @@
 The Visual Security Layer for Crypto Wallets.
 Stop guessing what you're signing. See the consequences.
 
-[Features](#features) • [Screenshots](#screenshots) • [Installation](#installation-from-source-developers) • [Built With](#%EF%B8%8Fbuilt-with) • [Roadmap](#roadmap) • [Contributing](#contributing) • [Privacy Policy](#privacy-policy) • [Changelog](#changelog) • [Disclaimer](#%EF%B8%8Fdisclaimer) • [License](#license)
+[Features](#features) • [Screenshots](#screenshots) • [Installation](#installation-from-source-developers) • [Built With](#%EF%B8%8Fbuilt-with) • [Roadmap](#roadmap) • [Contributing](#contributing) • [Privacy Policy](#privacy-policy) • [Changelog](#%EF%B8%8Fchangelog) • [Disclaimer](#%EF%B8%8Fdisclaimer) • [License](#license)
 ## 🚀Features
 **Visual Time-Travel UI:** Don't read hex codes. See a visual timeline of exactly what happens if you sign (e.g., "Wallet Drained").  
 **Unlimited Approval Blocker:** Automatically blocks transactions asking for infinite token spending permissions.  
@@ -72,15 +72,15 @@ SafeSign respects your privacy.
 + **Local Processing:** All transaction analysis happens locally in your browser. Nothing is sent to external servers.  
 + **Permissions:** The extension requires permission to access websites solely to intercept transaction requests from your wallet. It does not read your browsing history or personal information.
 
-## 🗓️ Changelog
-**v1.1.0**
-✨ Added: Community-sourced live blacklist (fetches verified scam addresses from GitHub).
-✨ Added: New "Known Scam Blocked" visual warning state in the Time-Travel UI.
-🛠️ Improved: Engine performance for faster transaction analysis.
+## 🗓️Changelog
+**v1.1.0**<br>
+✨ Added: Community-sourced live blacklist (fetches verified scam addresses from GitHub).<br>
+✨ Added: New "Known Scam Blocked" visual warning state in the Time-Travel UI.<br>
+🛠️ Improved: Engine performance for faster transaction analysis.<br>
 
-**v1.0.0**
-🚀 Initial Release: Unlimited Token Approval blocker & NFT Collection Drain blocker.
-🚀 Initial Release: Visual Time-Travel Warning UI & Green Safe Toast.
+**v1.0.0**<br>
+🚀 Initial Release: Unlimited Token Approval blocker & NFT Collection Drain blocker.<br>
+🚀 Initial Release: Visual Time-Travel Warning UI & Green Safe Toast.<br>
 
 ## ⚠️Disclaimer
 SafeSign Visualizer is provided "as is" for educational and security enhancement purposes. While it aims to detect and prevent common scam patterns, it is not a guarantee of absolute security.
