@@ -1,5 +1,5 @@
 import { useState } from "react"
-import logo from "data-url:./assets/logo.png" // 1. Import your logo
+import logo from "data-url:./assets/logo.png"
 
 function IndexPopup() {
   const [status, setStatus] = useState("Protection Active")
@@ -7,7 +7,7 @@ function IndexPopup() {
   return (
     <div style={{
       width: 320,
-      height: 400,
+      height: 480,
       backgroundColor: "#111",
       color: "white",
       display: "flex",
@@ -34,15 +34,14 @@ function IndexPopup() {
           justifyContent: "center",
           fontSize: "24px",
           boxShadow: "0 0 10px rgba(76, 175, 80, 0.3)",
-          overflow: "hidden" // Ensures image doesn't spill out
+          overflow: "hidden"
         }}>
-          {/* 2. Replace Emoji with Image */}
           <img src={logo} style={{ width: 28, height: 28, objectFit: "contain" }} alt="Logo" />
         </div>
         
         <div>
           <h1 style={{ margin: 0, fontSize: "18px", fontWeight: "bold" }}>SafeSign Visualizer</h1>
-          <div style={{ fontSize: "12px", color: "#888" }}>v1.0.0 • MVP</div>
+          <div style={{ fontSize: "12px", color: "#888" }}>v1.2.0</div>
         </div>
       </div>
 
@@ -82,6 +81,12 @@ function IndexPopup() {
           </div>
           <div style={{ marginBottom: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
             <span style={{ color: "#4CAF50" }}>✓</span> NFT Collection Drain Block
+          </div>
+          <div style={{ marginBottom: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
+            <span style={{ color: "#4CAF50" }}>✓</span> Gasless Permit Drain Block
+          </div>
+          <div style={{ marginBottom: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
+            <span style={{ color: "#4CAF50" }}>✓</span> Community Blacklist & Reporting
           </div>
           <div style={{ marginBottom: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
             <span style={{ color: "#4CAF50" }}>✓</span> Visual Time-Travel Warnings

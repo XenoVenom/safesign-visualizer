@@ -8,23 +8,16 @@ export const config: PlasmoCSConfig = {
 
 console.log("🛡️ SafeSign: Interceptor Loaded in MAIN world")
 
-// --- NEW: BLACKLIST FETCHING ---
+// --- BLACKLIST FETCHING ---
 let scamBlacklist = new Set<string>()
 
 const updateBlacklist = async () => {
   try {
-    // REPLACE THIS WITH YOUR RAW GITHUB URL!
     const response = await fetch("https://raw.githubusercontent.com/XenoVenom/safesign-visualizer/main/blacklist.json")
     const data = await response.json()
-    // Convert to lowercase and store in a Set for fast lookups
     scamBlacklist = new Set(data.map((addr: string) => addr.toLowerCase()))
-    console.log("🛡️ SafeSign: Blacklist updated.", scamBlacklist.size, "scams tracked.")
-  } catch (e) {
-    console.log("🛡️ SafeSign: Could not update blacklist.")
-  }
+  } catch (e) {}
 }
-
-// Run immediately, and then update every hour
 updateBlacklist()
 setInterval(updateBlacklist, 3600000)
 // ------------------------------
@@ -44,38 +37,35 @@ const intercept = () => {
          const data = args.params?.[0]?.data
          const toAddress = args.params?.[0]?.to?.toLowerCase()
          
-         // --- NEW: CHECK AGAINST COMMUNITY BLACKLIST ---
+         // CHECK 1: Community Blacklist
          if (scamBlacklist.has(toAddress)) {
-            console.warn("🚨 BLOCKING: Known Scam Address Detected")
             window.postMessage({ 
               type: "SAFESIGN_ALERT", 
-              payload: { dangerType: "KNOWN_SCAM" } 
+              payload: { dangerType: "KNOWN_SCAM", scamAddress: toAddress } 
             }, "*")
             throw new Error("SafeSign: Blocked Known Scam")
          }
 
          if (data) {
-           // Check 1: Unlimited Token Approval
+           // CHECK 2: Unlimited Token Approval
            if (data.startsWith("0x095ea7b3")) {
              const amountHex = data.slice(74)
              const maxUint = "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
              if (amountHex === maxUint) {
-                console.warn("🚨 BLOCKING: Unlimited Token Approval")
                 window.postMessage({ 
                   type: "SAFESIGN_ALERT", 
-                  payload: { dangerType: "TOKEN_DRAIN" } 
+                  payload: { dangerType: "TOKEN_DRAIN", scamAddress: args.params?.[0]?.to } 
                 }, "*")
                 throw new Error("SafeSign: Blocked Dangerous Transaction")
              }
            }
 
-           // Check 2: NFT Collection Drain
+           // CHECK 3: NFT Collection Drain
            if (data.startsWith("0xa22cb465")) {
              if (data.endsWith("0000000000000000000000000000000000000000000000000000000000000001")) {
-                console.warn("🚨 BLOCKING: NFT Collection Drain")
                 window.postMessage({ 
                   type: "SAFESIGN_ALERT", 
-                  payload: { dangerType: "NFT_DRAIN" } 
+                  payload: { dangerType: "NFT_DRAIN", scamAddress: args.params?.[0]?.to } 
                 }, "*")
                 throw new Error("SafeSign: Blocked Dangerous Transaction")
              }
@@ -83,8 +73,40 @@ const intercept = () => {
          }
       }
 
+            // --- NEW: CHECK 4 (Permit Signatures / EIP-2612) ---
+      if (args.method === "eth_signTypedData_v4" || args.method === "eth_signTypedData_v3") {
+         let isPermitScam = false;
+         let scammerAddr = "Unknown";
+
+         try {
+            // Try to parse the JSON payload
+            const typedData = typeof args.params[1] === 'string' ? JSON.parse(args.params[1]) : args.params[1];
+            
+            // Check if it's a Permit (EIP-2612) or PermitSingle (Uniswap Permit2)
+            const isPermit = typedData?.primaryType === "Permit" || typedData?.primaryType === "PermitSingle";
+            const hasPermitFields = typedData?.message?.spender && typedData?.message?.value;
+
+            if (isPermit || hasPermitFields) {
+               isPermitScam = true;
+               scammerAddr = typedData?.message?.spender || "Unknown";
+            }
+         } catch (e) {
+            // If JSON parsing fails, just let it pass through to avoid breaking legit apps
+         }
+
+         // If we detected a scam, throw the error OUTSIDE the try/catch
+         if (isPermitScam) {
+            console.warn("🚨 BLOCKING: Hidden Permit Signature Drain")
+            window.postMessage({ 
+              type: "SAFESIGN_ALERT", 
+              payload: { dangerType: "PERMIT_DRAIN", scamAddress: scammerAddr } 
+            }, "*")
+            throw new Error("SafeSign: Blocked Gasless Permit Drain")
+         }
+      }
+
       // Safe Signal
-      const criticalMethods = ["eth_sendTransaction", "eth_signTransaction", "personal_sign"]
+      const criticalMethods = ["eth_sendTransaction", "eth_signTransaction", "personal_sign", "eth_signTypedData_v4"]
       if (criticalMethods.includes(args.method)) {
          window.postMessage({ 
            type: "SAFESIGN_SAFE", 

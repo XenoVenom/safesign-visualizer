@@ -8,12 +8,14 @@ export const config: PlasmoCSConfig = {
 
 const WarningOverlay = () => {
   const [visible, setVisible] = useState(false)
-  const [dangerType, setDangerType] = useState("UNKNOWN") // TOKEN_DRAIN or NFT_DRAIN
+  const [dangerType, setDangerType] = useState("UNKNOWN")
+  const [data, setData] = useState<any>(null)
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (event.data.type === "SAFESIGN_ALERT") {
         setDangerType(event.data.payload.dangerType || "UNKNOWN")
+        setData(event.data.payload)
         setVisible(true)
       }
     }
@@ -28,7 +30,7 @@ const WarningOverlay = () => {
   let explanation = "This transaction is unsafe."
   let node2Text = "Hidden malicious logic detected."
 
-    if (dangerType === "TOKEN_DRAIN") {
+  if (dangerType === "TOKEN_DRAIN") {
     title = "Token Drain Blocked"
     explanation = "A site is trying to get UNLIMITED access to your tokens."
     node2Text = "Site gains Unlimited Access to your tokens."
@@ -36,10 +38,14 @@ const WarningOverlay = () => {
     title = "NFT Drain Blocked"
     explanation = "A site is trying to steal your ENTIRE NFT collection."
     node2Text = "Site gains access to ALL your NFTs in this collection."
-  } else if (dangerType === "KNOWN_SCAM") {
+    } else if (dangerType === "KNOWN_SCAM") {
     title = "Known Scam Blocked"
     explanation = "This address is a verified scammer tracked by the SafeSign community."
     node2Text = "Funds sent to this address are lost forever."
+  } else if (dangerType === "PERMIT_DRAIN") {
+    title = "Hidden Permit Drain Blocked"
+    explanation = "This 'Free Login' is actually a hidden permission to drain your tokens!"
+    node2Text = "Site gets a signed permission slip to empty your wallet (gasless)."
   }
 
   return (
@@ -65,8 +71,9 @@ const WarningOverlay = () => {
         boxShadow: "0 0 50px rgba(255, 0, 0, 0.2)"
       }}>
         
+        {/* Header */}
         <div style={{ marginBottom: "10px" }}>
-         <img src={dangerLogo} style={{ width: 60, height: 60 }} alt="Shield" />
+          <img src={dangerLogo} style={{ width: 60, height: 60 }} alt="Shield" />
         </div>
         <h1 style={{ color: "#ff4d4d", marginTop: 0, fontSize: "28px", textTransform: "uppercase", letterSpacing: "1px" }}>
           {title}
@@ -89,7 +96,12 @@ const WarningOverlay = () => {
           
           {/* Node 1 */}
           <div style={{ display: "flex", alignItems: "center", gap: "15px", opacity: 0.6 }}>
-            <div style={{ width: "40px", height: "40px", background: "#444", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px" }}>📝</div>
+            <div style={{ 
+              width: "40px", height: "40px", 
+              background: "#444", borderRadius: "50%", 
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: "18px"
+            }}>📝</div>
             <div>
               <div style={{ fontWeight: "bold", fontSize: "12px", color: "#888" }}>NOW</div>
               <div style={{ fontSize: "14px" }}>You click "Sign".</div>
@@ -100,7 +112,13 @@ const WarningOverlay = () => {
 
           {/* Node 2: Dynamic Danger */}
           <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-            <div style={{ width: "40px", height: "40px", background: "#ff4d4d", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", boxShadow: "0 0 15px rgba(255, 77, 77, 0.4)" }}>🦠</div>
+            <div style={{ 
+              width: "40px", height: "40px", 
+              background: "#ff4d4d", borderRadius: "50%", 
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: "18px",
+              boxShadow: "0 0 15px rgba(255, 77, 77, 0.4)"
+            }}>🦠</div>
             <div>
               <div style={{ fontWeight: "bold", fontSize: "12px", color: "#ff4d4d" }}>+2 SECONDS (HIDDEN)</div>
               <div style={{ fontSize: "14px" }}>{node2Text}</div>
@@ -111,7 +129,12 @@ const WarningOverlay = () => {
 
           {/* Node 3 */}
           <div style={{ display: "flex", alignItems: "center", gap: "15px", opacity: 0.9 }}>
-            <div style={{ width: "40px", height: "40px", background: "#8b0000", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px" }}>💸</div>
+            <div style={{ 
+              width: "40px", height: "40px", 
+              background: "#8b0000", borderRadius: "50%", 
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: "18px"
+            }}>💸</div>
             <div>
               <div style={{ fontWeight: "bold", fontSize: "12px", color: "#8b0000" }}>+10 SECONDS</div>
               <div style={{ fontSize: "14px" }}>Assets stolen. <strong>Balance: $0</strong></div>
@@ -120,6 +143,39 @@ const WarningOverlay = () => {
 
         </div>
 
+                {/* Google Forms Silent Auto-Submit Button */}
+        <a 
+          onClick={() => {
+            const scamUrl = window.location.href;
+            const scamAddress = data?.scamAddress || "Unknown";
+            
+            // 1. REPLACE YOUR_FORM_ID (the long string of letters/numbers)
+            // 2. REPLACE URL_ENTRY_ID (e.g., entry.123456)
+            // 3. REPLACE ADDRESS_ENTRY_ID (e.g., entry.789012)
+            const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdpig73sL8wv_m7L239K33WBoEUFdPO2jmRDd1shMIUm2q7XQ/formResponse?entry.1585420986=${encodeURIComponent(scamUrl)}&entry.865268458=${encodeURIComponent(scamAddress)}&submit=Submit`;
+            
+            window.open(formUrl, "_blank");
+          }}
+          style={{
+            display: "block",
+            width: "100%",
+            background: "transparent",
+            color: "#ff4d4d",
+            border: "1px solid #ff4d4d",
+            padding: "12px",
+            fontSize: "14px",
+            borderRadius: "12px",
+            cursor: "pointer",
+            fontWeight: "bold",
+            marginBottom: "15px",
+            textDecoration: "none",
+            boxSizing: "border-box"
+          }}
+        >
+          🚩 Report this Scam to SafeSign
+        </a>
+
+        {/* Dismiss Button */}
         <button 
           onClick={() => setVisible(false)}
           style={{
