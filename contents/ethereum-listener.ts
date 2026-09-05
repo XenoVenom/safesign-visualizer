@@ -8,22 +8,54 @@ export const config: PlasmoCSConfig = {
 
 console.log("🛡️ SafeSign: Interceptor Loaded in MAIN world")
 
-// --- BLACKLIST FETCHING ---
+// --- BLACKLIST & DOMAIN FETCHING ---
 let scamBlacklist = new Set<string>()
+let blockedDomains = new Set<string>()
+let listsLoaded = false // NEW: Wait for lists before checking
 
-const updateBlacklist = async () => {
+const updateLists = async () => {
   try {
-    const response = await fetch("https://raw.githubusercontent.com/XenoVenom/safesign-visualizer/main/blacklist.json")
-    const data = await response.json()
-    scamBlacklist = new Set(data.map((addr: string) => addr.toLowerCase()))
-  } catch (e) {}
+    // Fetch Address Blacklist
+    const addrRes = await fetch("https://raw.githubusercontent.com/XenoVenom/safesign-visualizer/main/blacklist.json")
+    const addrData = await addrRes.json()
+    scamBlacklist = new Set(addrData.map((addr: string) => addr.toLowerCase()))
+
+    // Fetch Domain Blacklist
+    const domRes = await fetch("https://raw.githubusercontent.com/XenoVenom/safesign-visualizer/main/blocked-domains.json")
+    const domData = await domRes.json()
+    blockedDomains = new Set(domData)
+  } catch (e) {
+    console.log("🛡️ SafeSign: Could not update blocklists.")
+  }
+  listsLoaded = true // Download is finished!
 }
-updateBlacklist()
-setInterval(updateBlacklist, 3600000)
+updateLists()
+setInterval(updateLists, 3600000)
 // ------------------------------
 
 const intercept = () => {
+  // 1. Wait for the blocklists to download before doing anything
+  if (!listsLoaded) {
+     setTimeout(intercept, 10) // Check again in 10ms
+     return
+  }
+
+  // 2. Check if the current site is a known scam
+  const currentDomain = window.location.hostname.replace(/^www\./, '').toLowerCase()
+  if (blockedDomains.has(currentDomain)) {
+     console.warn("🚨 BLOCKING: Known Phishing Website!")
+     window.postMessage({ 
+       type: "SAFESIGN_ALERT", 
+       payload: { dangerType: "PHISHING_SITE" } 
+     }, "*")
+     
+     // Break window.ethereum so the site can't ask the user to connect
+     window.ethereum = undefined
+     return // Stop hooking, the site is dead
+  }
+
   if (window.ethereum) {
+
     const originalRequest = window.ethereum.request
     
     window.ethereum.request = async (args) => {
@@ -73,28 +105,27 @@ const intercept = () => {
          }
       }
 
-            // --- NEW: CHECK 4 (Permit Signatures / EIP-2612) ---
+           // --- NEW: CHECK 4 (Permit Signatures & SIWE Login) ---
       if (args.method === "eth_signTypedData_v4" || args.method === "eth_signTypedData_v3") {
          let isPermitScam = false;
          let scammerAddr = "Unknown";
+         let parsedData: any = null; // Moved declaration up here!
 
          try {
             // Try to parse the JSON payload
-            const typedData = typeof args.params[1] === 'string' ? JSON.parse(args.params[1]) : args.params[1];
+            parsedData = typeof args.params[1] === 'string' ? JSON.parse(args.params[1]) : args.params[1];
             
-            // Check if it's a Permit (EIP-2612) or PermitSingle (Uniswap Permit2)
-            const isPermit = typedData?.primaryType === "Permit" || typedData?.primaryType === "PermitSingle";
-            const hasPermitFields = typedData?.message?.spender && typedData?.message?.value;
+            // Check if it's a Permit (EIP-2612)
+            const isPermit = parsedData?.primaryType === "Permit" || parsedData?.primaryType === "PermitSingle";
+            const hasPermitFields = parsedData?.message?.spender && parsedData?.message?.value;
 
             if (isPermit || hasPermitFields) {
                isPermitScam = true;
-               scammerAddr = typedData?.message?.spender || "Unknown";
+               scammerAddr = parsedData?.message?.spender || "Unknown";
             }
-         } catch (e) {
-            // If JSON parsing fails, just let it pass through to avoid breaking legit apps
-         }
+         } catch (e) {}
 
-         // If we detected a scam, throw the error OUTSIDE the try/catch
+         // If we detected a Permit scam, throw the error
          if (isPermitScam) {
             console.warn("🚨 BLOCKING: Hidden Permit Signature Drain")
             window.postMessage({ 
@@ -102,6 +133,24 @@ const intercept = () => {
               payload: { dangerType: "PERMIT_DRAIN", scamAddress: scammerAddr } 
             }, "*")
             throw new Error("SafeSign: Blocked Gasless Permit Drain")
+         }
+
+         // --- NEW: SIWE Domain Mismatch Check (EIP-4361) ---
+         if (parsedData?.message?.domain) {
+            // Get the domain the message CLAIMS to be from
+            const claimedDomain = parsedData.message.domain.toLowerCase().replace(/^www\./, '');
+            // Get the domain the user is ACTUALLY on
+            const actualDomain = window.location.hostname.replace(/^www\./, '').toLowerCase();
+            
+            // If they don't match, it's a spoofed login!
+            if (claimedDomain && claimedDomain !== actualDomain) {
+               console.warn("🚨 BLOCKING: Spoofed SIWE Login Domain")
+               window.postMessage({ 
+                 type: "SAFESIGN_ALERT", 
+                 payload: { dangerType: "SIWE_SPOOF", scamAddress: window.location.hostname } 
+               }, "*")
+               throw new Error("SafeSign: Blocked Spoofed Login")
+            }
          }
       }
 

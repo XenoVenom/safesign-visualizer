@@ -7,7 +7,7 @@ function IndexPopup() {
   return (
     <div style={{
       width: 320,
-      height: 480,
+      height: 520, // Increased height to fit all items
       backgroundColor: "#111",
       color: "white",
       display: "flex",
@@ -41,7 +41,7 @@ function IndexPopup() {
         
         <div>
           <h1 style={{ margin: 0, fontSize: "18px", fontWeight: "bold" }}>SafeSign Visualizer</h1>
-          <div style={{ fontSize: "12px", color: "#888" }}>v1.2.0</div>
+          <div style={{ fontSize: "12px", color: "#888" }}>v1.3.0</div>
         </div>
       </div>
 
@@ -74,21 +74,27 @@ function IndexPopup() {
           }}></div>
         </div>
 
-        {/* Features List */}
-        <div style={{ fontSize: "13px", color: "#aaa", marginBottom: "20px" }}>
-          <div style={{ marginBottom: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
+        {/* Features List (Condensed spacing) */}
+        <div style={{ fontSize: "13px", color: "#aaa", marginBottom: "15px" }}>
+          <div style={{ marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
             <span style={{ color: "#4CAF50" }}>✓</span> Unlimited Token Approval Block
           </div>
-          <div style={{ marginBottom: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
             <span style={{ color: "#4CAF50" }}>✓</span> NFT Collection Drain Block
           </div>
-          <div style={{ marginBottom: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
             <span style={{ color: "#4CAF50" }}>✓</span> Gasless Permit Drain Block
           </div>
-          <div style={{ marginBottom: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
+            <span style={{ color: "#4CAF50" }}>✓</span> Proactive Phishing Website Blocker
+          </div>
+          <div style={{ marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
+            <span style={{ color: "#4CAF50" }}>✓</span> Spoofed Login Detector (SIWE)
+          </div>
+          <div style={{ marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
             <span style={{ color: "#4CAF50" }}>✓</span> Community Blacklist & Reporting
           </div>
-          <div style={{ marginBottom: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
             <span style={{ color: "#4CAF50" }}>✓</span> Visual Time-Travel Warnings
           </div>
         </div>
@@ -110,8 +116,12 @@ function IndexPopup() {
       <div style={{
         padding: "15px",
         borderTop: "1px solid #222",
-        textAlign: "center"
+        textAlign: "center",
+        display: "flex",
+        flexDirection: "column",
+        gap: "5px"
       }}>
+        
         {/* GitHub Link */}
         <div 
           onClick={() => chrome.tabs.create({ url: "https://github.com/XenoVenom/safesign-visualizer" })}
@@ -122,9 +132,9 @@ function IndexPopup() {
 
         {/* Report Scam Link */}
         <div 
-    onClick={() => chrome.tabs.create({ url: "https://forms.gle/dkBuRXhUrFiSfkEF7" })}
-    style={{ color: "#ff4d4d", textDecoration: "none", fontSize: "12px", fontWeight: "bold", cursor: "pointer" }}
-  >
+          onClick={() => chrome.tabs.create({ url: "https://forms.gle/dkBuRXhUrFiSfkEF7" })}
+          style={{ color: "#ff4d4d", textDecoration: "none", fontSize: "12px", fontWeight: "bold", cursor: "pointer" }}
+        >
           🚩 Report a Scam
         </div>
         
