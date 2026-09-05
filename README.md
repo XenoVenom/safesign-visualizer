@@ -10,8 +10,11 @@ Stop guessing what you're signing. See the consequences.
 **Unlimited Approval Blocker:** Automatically blocks transactions asking for infinite token spending permissions.  
 **NFT Drain Protection:** Detects and blocks setApprovalForAll scams that steal entire NFT collections.  
 **Real-Time Green Light:** Get instant confirmation when a transaction is verified safe.  
-**Universal Compatibility:** Works with MetaMask, Coinbase Wallet, Rabby, Brave Wallet, and any window.ethereum provider.
-**Community-Sourced Blacklist:** Fetches a live list of verified scam addresses from GitHub, automatically blocking known wallet drainers in real-time.
+**Universal Compatibility:** Works with MetaMask, Coinbase Wallet, Rabby, Brave Wallet, and any window.ethereum provider.<br>
+**Community-Sourced Blacklist:** Fetches a live list of verified scam addresses from GitHub, automatically blocking known wallet drainers in real-time.<br>
+**Proactive Anti-Phishing:** Fetches a live list of malicious websites. If a user visits a known scam site, SafeSign disables the wallet and forces a redirect to safety.<br>
+**Zero-Day Spoofed Login Detection (SIWE):** Analyzes "Sign-In With Ethereum" (EIP-4361) requests. If a login message is pretending to be a different website (a spoof), it blocks the signature and ejects the user.<br>
+
 ## 📸Screenshots
 <table>
 <tr>
@@ -28,7 +31,7 @@ Stop guessing what you're signing. See the consequences.
 <td><b>🛡️ The Dashboard</b></td>
  </tr>
  <tr>
-<td><img src="screenshots/extension_UI.png" width="400"></td>
+<td><img src="screenshots/safesign_popupUI-v1.3.0.png" width="400"></td>
 </tr>
 </table>
 
@@ -55,8 +58,9 @@ Stop guessing what you're signing. See the consequences.
 :white_check_mark: Unlimited Token Approval Block (ERC-20)<br>
 :white_check_mark: Token & NFT Drain Protection<br>
 :white_check_mark: Community-Sourced Blacklist<br>
-- [ ] Permit Signature Protection (EIP-2612)<br>
-- [ ] Permit Signature Protection (EIP-4361)<br>
+:white_check_mark: Permit Signature Protection (EIP-2612)<br>
+:white_check_mark: Proactive Anti-Phishing Domain Blocker <br>
+:white_check_mark: Zero-Day Spoofed Login Detector (SIWE/EIP-4361)<br>
 - [ ] Transaction Simulation<br>
 - [ ] Power User Mode<br>
 - [ ] Honeypot & Rugpull Detection<br>
@@ -78,6 +82,16 @@ SafeSign respects your privacy.
 + **Permissions:** The extension requires permission to access websites solely to intercept transaction requests from your wallet. It does not read your browsing history or personal information.
 
 ## 🗓️Changelog
+**v1.3.0**<br>
+✨ Added: Proactive Anti-Phishing Domain Blocker (fetches malicious URLs and blocks wallet loading).<br>
+✨ Added: Zero-Day Spoofed Login Detector (SIWE/EIP-4361). Blocks logins pretending to be other sites.<br>
+🚪 Added: "Escape to Safety" redirect for phishing sites.<br>
+
+**v1.2.0**<br>
+✨ Added: Permit Signature Protection (EIP-2612): We now block "gasless" sign-in scams. Scammers trick users into signing a free message to log in, which secretly gives them permission to drain your tokens. SafeSign now detects and blocks this invisible threat.<br>
+✨ Added: One-Click Scam Reporting: Added a "Report this Scam" button directly to the Warning UI. Users can now automatically submit malicious addresses and URLs to our community database in one click.<br>
+🛠️ UI Updates: Updated the extension popup dashboard to reflect the new security features.<br>
+
 **v1.1.0**<br>
 ✨ Added: Community-sourced live blacklist (fetches verified scam addresses from GitHub).<br>
 ✨ Added: New "Known Scam Blocked" visual warning state in the Time-Travel UI.<br>
