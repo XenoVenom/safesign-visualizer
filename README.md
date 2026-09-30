@@ -23,7 +23,7 @@ Stop guessing what you're signing. See the consequences.
 <td style="border: none"><b>:heavy_check_mark:The Safe Verification</b></td>
 </tr>
 <tr>
-<td style="border: none"><img src="screenshots/SafeSign_WarningUI_TechDetails-1.4.0.png" width="500"></td>
+<td style="border: none"><img src="screenshots/SafeSign_WarningUI_TechDetails-1.4.0.PNG" width="500"></td>
 <td style="border: none"><img src="screenshots/safe.png" width="500"></td>
 </tr>
  </table>
@@ -32,7 +32,7 @@ Stop guessing what you're signing. See the consequences.
 <td><b>🛡️ The Dashboard</b></td>
  </tr>
  <tr>
-<td><img src="screenshots/SafeSign_UI-1.4.0.png" width="400"></td>
+<td><img src="screenshots/SafeSign_UI-1.4.0.PNG" width="400"></td>
 </tr>
 </table>
 
