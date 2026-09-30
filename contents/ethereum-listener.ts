@@ -7,6 +7,16 @@ export const config: PlasmoCSConfig = {
 }
 
 console.log("🛡️ SafeSign: Interceptor Loaded in MAIN world")
+// State variable
+let isPaused = false
+
+// Listen for pause commands from the Popup
+window.addEventListener("message", (event) => {
+  if (event.data.type === "SAFESIGN_PAUSE_STATE") {
+    isPaused = event.data.paused
+    console.log(isPaused ? "⏸️ SafeSign: Protection Paused" : "🛡️ SafeSign: Protection Active")
+  }
+})
 
 // --- BLACKLIST & DOMAIN FETCHING ---
 let scamBlacklist = new Set<string>()
@@ -27,7 +37,7 @@ const updateLists = async () => {
   } catch (e) {
     console.log("🛡️ SafeSign: Could not update blocklists.")
   }
-  listsLoaded = true // Download is finished!
+  listsLoaded = true
 }
 updateLists()
 setInterval(updateLists, 3600000)
@@ -59,15 +69,23 @@ const intercept = () => {
     const originalRequest = window.ethereum.request
     
     window.ethereum.request = async (args) => {
+       // 1. If paused, skip all checks
+      if (isPaused) {
+        console.log("⏸️ SafeSign Paused. Passing transaction through.")
+        return originalRequest.apply(window.ethereum, [args])
+      }
+
       const silentMethods = ["eth_blockNumber", "eth_chainId", "net_version", "eth_gasPrice", "eth_accounts"]
       
       if (!silentMethods.includes(args.method)) {
         console.log("🧠 SafeSign Caught:", args.method)
       }
 
-      if (args.method === "eth_sendTransaction") {
-         const data = args.params?.[0]?.data
-         const toAddress = args.params?.[0]?.to?.toLowerCase()
+            if (args.method === "eth_sendTransaction") {
+         const txParams = args.params?.[0]
+         const data = txParams?.data
+         const toAddress = txParams?.to?.toLowerCase()
+         const fromAddress = txParams?.from?.toLowerCase()
          
          // CHECK 1: Community Blacklist
          if (scamBlacklist.has(toAddress)) {
@@ -90,6 +108,14 @@ const intercept = () => {
                 }, "*")
                 throw new Error("SafeSign: Blocked Dangerous Transaction")
              }
+                          if (amountHex === maxUint) {
+                console.warn("🚨 BLOCKING: Unlimited Token Approval")
+                window.postMessage({ 
+                  type: "SAFESIGN_ALERT", 
+                  payload: { dangerType: "TOKEN_DRAIN", scamAddress: args.params?.[0]?.to, rawData: data } 
+                }, "*")
+                throw new Error("SafeSign: Blocked Dangerous Transaction")
+             }
            }
 
            // CHECK 3: NFT Collection Drain
@@ -98,6 +124,14 @@ const intercept = () => {
                 window.postMessage({ 
                   type: "SAFESIGN_ALERT", 
                   payload: { dangerType: "NFT_DRAIN", scamAddress: args.params?.[0]?.to } 
+                }, "*")
+                throw new Error("SafeSign: Blocked Dangerous Transaction")
+             }
+                          if (amountHex === maxUint) {
+                console.warn("🚨 BLOCKING: Unlimited Token Approval")
+                window.postMessage({ 
+                  type: "SAFESIGN_ALERT", 
+                  payload: { dangerType: "TOKEN_DRAIN", scamAddress: args.params?.[0]?.to, rawData: data } 
                 }, "*")
                 throw new Error("SafeSign: Blocked Dangerous Transaction")
              }

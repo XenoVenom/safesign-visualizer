@@ -10,6 +10,7 @@ const WarningOverlay = () => {
   const [visible, setVisible] = useState(false)
   const [dangerType, setDangerType] = useState("UNKNOWN")
   const [data, setData] = useState<any>(null)
+  const [showDetails, setShowDetails] = useState(false)
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -50,10 +51,14 @@ const WarningOverlay = () => {
     title = "PHISHING WEBSITE DETECTED"
     explanation = "This website is a verified scam. SafeSign has disabled your wallet on this page. Do not connect your wallet. Leave immediately!"
     node2Text = "This site is designed to steal your funds the moment you connect."
-  } else if (dangerType === "SIWE_SPOOF") {
+    } else if (dangerType === "SIWE_SPOOF") {
     title = "Spoofed Login Blocked"
     explanation = "This 'Sign-In' message is pretending to be a different website. If you sign this, scammers can use it to trick you later."
     node2Text = "The domain in the login message does not match the website you are on."
+  } else if (dangerType === "SIMULATION_DRAIN") {
+    title = "SIMULATED DRAIN DETECTED"
+    explanation = `Time-Travel Preview shows you will lose: ${data?.lossDetails || "assets"}`
+    node2Text = "The sandbox simulation executed a transfer of your assets to an unknown address."
   }
 
   return (
@@ -136,7 +141,43 @@ const WarningOverlay = () => {
 
           </div>
         )}
-
+            {/* NEW: Power User Technical Details */}
+        <div style={{ marginBottom: "20px", textAlign: "center" }}>
+          <div 
+            onClick={() => setShowDetails(!showDetails)}
+            style={{ 
+              color: "#888", 
+              fontSize: "12px", 
+              cursor: "pointer", 
+              textDecoration: "underline",
+              marginBottom: "10px"
+            }}
+          >
+            {showDetails ? "Hide Technical Details" : "Show Technical Details"}
+          </div>
+          
+          {showDetails && (
+            <div style={{
+              background: "#000",
+              border: "1px solid #333",
+              padding: "12px",
+              borderRadius: "8px",
+              textAlign: "left",
+              fontFamily: "monospace",
+              fontSize: "10px",
+              color: "#4CAF50",
+              wordBreak: "break-all",
+              lineHeight: "1.6"
+            }}>
+              <div><b style={{color: "#666"}}>DANGER TYPE:</b> {dangerType}</div>
+              <div><b style={{color: "#666"}}>SCAMMER:</b> {data?.scamAddress || "Unknown"}</div>
+              <div style={{ marginTop: "5px" }}><b style={{color: "#666"}}>RAW DATA:</b></div>
+              <div style={{ color: "#aaa", marginTop: "4px" }}>
+                {data?.rawData ? data.rawData.slice(0, 100) + "..." : "No data available"}
+              </div>
+            </div>
+          )}
+        </div>
                 {/* Google Forms Silent Auto-Submit Button */}
         <a 
           onClick={() => {

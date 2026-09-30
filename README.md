@@ -14,6 +14,7 @@ Stop guessing what you're signing. See the consequences.
 **Community-Sourced Blacklist:** Fetches a live list of verified scam addresses from GitHub, automatically blocking known wallet drainers in real-time.<br>
 **Proactive Anti-Phishing:** Fetches a live list of malicious websites. If a user visits a known scam site, SafeSign disables the wallet and forces a redirect to safety.<br>
 **Zero-Day Spoofed Login Detection (SIWE):** Analyzes "Sign-In With Ethereum" (EIP-4361) requests. If a login message is pretending to be a different website (a spoof), it blocks the signature and ejects the user.<br>
+**Power User Mode:** Expandable "Technical Details" box in the Warning UI showing raw hex data and contract addresses for developers.<br>
 
 ## 📸Screenshots
 <table>
@@ -22,7 +23,7 @@ Stop guessing what you're signing. See the consequences.
 <td style="border: none"><b>:heavy_check_mark:The Safe Verification</b></td>
 </tr>
 <tr>
-<td style="border: none"><img src="screenshots/danger.png" width="500"></td>
+<td style="border: none"><img src="screenshots/SafeSign_WarningUI_TechDetails-1.4.0.png" width="500"></td>
 <td style="border: none"><img src="screenshots/safe.png" width="500"></td>
 </tr>
  </table>
@@ -31,7 +32,7 @@ Stop guessing what you're signing. See the consequences.
 <td><b>🛡️ The Dashboard</b></td>
  </tr>
  <tr>
-<td><img src="screenshots/safesign_popupUI-v1.3.0.png" width="400"></td>
+<td><img src="screenshots/SafeSign_UI-1.4.0.png" width="400"></td>
 </tr>
 </table>
 
@@ -61,8 +62,9 @@ Stop guessing what you're signing. See the consequences.
 :white_check_mark: Permit Signature Protection (EIP-2612)<br>
 :white_check_mark: Proactive Anti-Phishing Domain Blocker <br>
 :white_check_mark: Zero-Day Spoofed Login Detector (SIWE/EIP-4361)<br>
+:white_check_mark: Power User Mode<br>
+:white_check_mark: Start/Pause Protection Toggle<br>
 - [ ] Transaction Simulation<br>
-- [ ] Power User Mode<br>
 - [ ] Honeypot & Rugpull Detection<br>
 - [ ] Multi-Chain Expansion<br>
 ## 🤝Contributing
@@ -82,6 +84,12 @@ SafeSign respects your privacy.
 + **Permissions:** The extension requires permission to access websites solely to intercept transaction requests from your wallet. It does not read your browsing history or personal information.
 
 ## 🗓️Changelog
+**v1.4.0**<br>
+✨ Added: Start/Pause Protection Toggle. Users can now temporarily pause SafeSign for advanced DeFi interactions.<br>
+✨ Added: Dynamic Icon Switching. The toolbar icon changes color when protection is paused to warn the user.<br>
+✨ Added: Power User Mode. Expandable "Technical Details" box in the Warning UI showing raw hex data and contract addresses for developers.<br>
+🎨 UI Polish: Sleeker borders, fixed white background plate, and refined dark mode aesthetic.<br>
+
 **v1.3.0**<br>
 ✨ Added: Proactive Anti-Phishing Domain Blocker (fetches malicious URLs and blocks wallet loading).<br>
 ✨ Added: Zero-Day Spoofed Login Detector (SIWE/EIP-4361). Blocks logins pretending to be other sites.<br>
