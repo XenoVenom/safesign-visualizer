@@ -35,6 +35,10 @@ const WarningOverlay = () => {
     title = "Token Drain Blocked"
     explanation = "A site is trying to get UNLIMITED access to your tokens."
     node2Text = "Site gains Unlimited Access to your tokens."
+   } else if (dangerType === "POISONED_ADDRESS") {
+    title = "Address Poisoning Detected"
+    explanation = "This address looks almost identical to one you have used before, but it is a fake. Sending funds here will lose them forever."
+    node2Text = "Scammers use fake addresses that start and end with the same characters."
   } else if (dangerType === "NFT_DRAIN") {
     title = "NFT Drain Blocked"
     explanation = "A site is trying to steal your ENTIRE NFT collection."

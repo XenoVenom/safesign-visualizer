@@ -7,8 +7,28 @@ export const config: PlasmoCSConfig = {
 }
 
 console.log("🛡️ SafeSign: Interceptor Loaded in MAIN world")
+// Helper to ask the bridge if an address is poisoned
+const checkAddressPoisoning = (address: string) => {
+  return new Promise<{ isPoison: boolean, matchedSafeAddress: string }>((resolve) => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === "SAFESIGN_POISON_RESULT") {
+        window.removeEventListener("message", handleMessage)
+        resolve(event.data.payload)
+      }
+    }
+    window.addEventListener("message", handleMessage)
+    window.postMessage({ type: "SAFESIGN_CHECK_POISON", payload: address }, "*")
+  })
+}
 // State variable
 let isPaused = false
+// --- NEW: AUTO-PAUSE ON LOCALHOST ---
+const currentHost = window.location.hostname
+console.log("🧪 SafeSign Debug: Current Host is", currentHost)
+if (currentHost === "localhost" || currentHost === "127.0.0.1") {
+  isPaused = true
+  console.log("⏸️ SafeSign: Auto-paused on Localhost for development.")
+}
 
 // Listen for pause commands from the Popup
 window.addEventListener("message", (event) => {
@@ -86,6 +106,26 @@ const intercept = () => {
          const data = txParams?.data
          const toAddress = txParams?.to?.toLowerCase()
          const fromAddress = txParams?.from?.toLowerCase()
+
+           // --- NEW: ADDRESS POISONING CHECK ---
+         if (toAddress && fromAddress) {
+            console.log("🧪 Poison Check: Sending address to bridge:", toAddress)
+            const poisonCheck = await checkAddressPoisoning(toAddress)
+            console.log("🧪 Poison Check: Result from bridge:", poisonCheck)
+            
+            if (poisonCheck.isPoison) {
+               console.warn("🚨 BLOCKING: Address Poisoning Detected!")
+               window.postMessage({ 
+                 type: "SAFESIGN_ALERT", 
+                 payload: { 
+                   dangerType: "POISONED_ADDRESS", 
+                   scamAddress: toAddress,
+                   rawData: `Similar to: ${poisonCheck.matchedSafeAddress}` 
+                 } 
+               }, "*")
+               throw new Error("SafeSign: Blocked Address Poisoning")
+            }
+         }
          
          // CHECK 1: Community Blacklist
          if (scamBlacklist.has(toAddress)) {
@@ -137,6 +177,12 @@ const intercept = () => {
              }
            }
          }
+         // --- NEW: ADD SAFE ADDRESS TO HISTORY ---
+         // If the transaction passed all scam checks, add the recipient to our local history
+         if (toAddress) {
+            window.postMessage({ type: "SAFESIGN_ADD_HISTORY", payload: toAddress }, "*")
+         }
+         // ---------------------------------------
       }
 
            // --- NEW: CHECK 4 (Permit Signatures & SIWE Login) ---

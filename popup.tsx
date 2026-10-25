@@ -24,12 +24,25 @@ const setIconData = async (dataUrl: string) => {
 function IndexPopup() {
   const [isPaused, setIsPaused] = useState(false)
 
-  // Load the saved state when popup opens
+    // Load the saved state when popup opens
   useEffect(() => {
-    chrome.storage.local.get("safesign_paused", (result) => {
-      const paused = result.safesign_paused === true
-      setIsPaused(paused)
-      setIconData(paused ? iconPausedUrl : iconActiveUrl)
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const currentUrl = tabs[0]?.url || ""
+      console.log("🧪 Popup Debug: Current URL is", currentUrl)
+      const isLocalhost = currentUrl.includes("localhost") || currentUrl.includes("127.0.0.1")
+      
+      if (isLocalhost) {
+        // Force DEV mode
+        setIsPaused(true)
+        chrome.action.setBadgeText({ text: "DEV" })
+        chrome.action.setBadgeBackgroundColor({ color: "#2196F3" }) // Blue for DEV
+      } else {
+        // Normal behavior
+        chrome.storage.local.get("safesign_paused", (result) => {
+          const paused = result.safesign_paused === true
+          setIsPaused(paused)
+        })
+      }
     })
   }, [])
 
@@ -54,7 +67,7 @@ function IndexPopup() {
       
       <div style={{
         width: 320,
-        height: 580,
+        height: 600,
         backgroundColor: "#121212",
         color: "white",
         display: "flex",
@@ -159,7 +172,7 @@ function IndexPopup() {
             fontWeight: isPaused ? "bold" : "normal",
             transition: "all 0.3s ease"
           }}>
-            {isPaused ? "⚠️ WARNING: SafeSign is paused. Your wallet is vulnerable to scams." : "SafeSign works automatically in the background. You don't need to click anything!"}
+                      {isPaused ? "⚠️ WARNING: SafeSign is paused (or in DEV mode). Your wallet is vulnerable." : "SafeSign works automatically in the background. You don't need to click anything!"}
           </div>
 
           {/* Features List */}
@@ -190,6 +203,12 @@ function IndexPopup() {
             </div>
             <div style={{ marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
               <span style={{ color: "#4CAF50" }}>✓</span> Power User Technical Decoder
+            </div>
+            <div style={{ marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
+              <span style={{ color: "#4CAF50" }}>✓</span> Auto-Pause on Localhost (DEV Mode)
+            </div>
+            <div style={{ marginBottom: "6px", display: "flex", alignItems: "center", gap: "8px" }}>
+              <span style={{ color: "#4CAF50" }}>✓</span> Address Poisoning Detector
             </div>
           </div>
         </div>

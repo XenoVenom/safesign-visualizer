@@ -6,6 +6,14 @@ export const config: PlasmoCSConfig = {
 }
 
 console.log("🔌 SafeSign: Pause Bridge Loaded")
+// --- NEW: AUTO-PAUSE ON LOCALHOST ---
+const currentUrl = window.location.href
+if (currentUrl.includes("localhost") || currentUrl.includes("127.0.0.1")) {
+  console.log("⏸️ SafeSign Bridge: Auto-pausing on Localhost.")
+  // Send the pause command immediately to the Brain
+  window.postMessage({ type: "SAFESIGN_PAUSE_STATE", paused: true }, "*")
+}
+// ------------------------------------
 
 // Use native Chrome storage listener
 chrome.storage.onChanged.addListener((changes, namespace) => {
