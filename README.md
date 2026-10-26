@@ -15,7 +15,9 @@ Stop guessing what you're signing. See the consequences.
 **Proactive Anti-Phishing:** Fetches a live list of malicious websites. If a user visits a known scam site, SafeSign disables the wallet and forces a redirect to safety.<br>
 **Zero-Day Spoofed Login Detection (SIWE):** Analyzes "Sign-In With Ethereum" (EIP-4361) requests. If a login message is pretending to be a different website (a spoof), it blocks the signature and ejects the user.<br>
 **Power User Mode:** Expandable "Technical Details" box in the Warning UI showing raw hex data and contract addresses for developers.<br>
-
+**Auto-Pause on Localhost (DEV Mode):** Automatically disables protection on localhost or 127.0.0.1 with a blue "DEV" badge, so Web3 developers can test dApps without interference.<br>
+**Address Poisoning Detector:** Tracks previously interacted addresses locally. If you try to send funds to a new address that looks almost identical to one you've used before, SafeSign throws a Red Warning.<br>
+**Universal Compatibility:** Works with MetaMask, Coinbase Wallet, Rabby, Brave Wallet, and any window.ethereum provider.<br>
 ## 📸Screenshots
 <table>
 <tr>
@@ -32,7 +34,7 @@ Stop guessing what you're signing. See the consequences.
 <td><b>🛡️ The Dashboard</b></td>
  </tr>
  <tr>
-<td><img src="screenshots/SafeSign_UI-1.4.0.PNG" width="400"></td>
+<td><img src="screenshots/SafeSign_popupUI-v1.5.0.PNG" width="400"></td>
 </tr>
 </table>
 
@@ -62,8 +64,10 @@ Stop guessing what you're signing. See the consequences.
 :white_check_mark: Permit Signature Protection (EIP-2612)<br>
 :white_check_mark: Proactive Anti-Phishing Domain Blocker <br>
 :white_check_mark: Zero-Day Spoofed Login Detector (SIWE/EIP-4361)<br>
-:white_check_mark: Power User Mode<br>
+:white_check_mark: Power User Mode (Technical Details Decoder)<br>
 :white_check_mark: Start/Pause Protection Toggle<br>
+:white_check_mark: Auto-Pause on Localhost (DEV Mode)<br>
+:white_check_mark: Address Poisoning Detector<br>
 - [ ] Transaction Simulation<br>
 - [ ] Honeypot & Rugpull Detection<br>
 - [ ] Multi-Chain Expansion<br>
@@ -84,6 +88,11 @@ SafeSign respects your privacy.
 + **Permissions:** The extension requires permission to access websites solely to intercept transaction requests from your wallet. It does not read your browsing history or personal information.
 
 ## 🗓️Changelog
+**v1.5.0**<br>
+✨ Added: Auto-Pause on Localhost (DEV mode for Web3 developers).<br>
+✨ Added: Address Poisoning Detector (zero-database, local history matching).<br>
+🎨 UI Polish: Cleaned up badge logic for manual pauses.<br>
+
 **v1.4.0**<br>
 ✨ Added: Start/Pause Protection Toggle. Users can now temporarily pause SafeSign for advanced DeFi interactions.<br>
 ✨ Added: Dynamic Icon Switching. The toolbar icon changes color when protection is paused to warn the user.<br>
