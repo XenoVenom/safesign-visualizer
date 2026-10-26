@@ -101,7 +101,7 @@ function IndexPopup() {
           
           <div>
             <h1 style={{ margin: 0, fontSize: "18px", fontWeight: "bold" }}>SafeSign Visualizer</h1>
-            <div style={{ fontSize: "12px", color: "#888" }}>v1.4.0</div>
+            <div style={{ fontSize: "12px", color: "#888" }}>v1.5.0</div>
           </div>
         </div>
 
